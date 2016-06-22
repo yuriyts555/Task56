@@ -122,7 +122,7 @@ public class AlarmWork {
         alarmManager.set(AlarmManager.RTC_WAKEUP, mWakeTime, pendingIntent);
 
 
-        Log.e(MainActivity.TAG,"!set alarm to "+Task.getTimeByString(mWakeTime)+" id= "+Long.toString(mID));
+       // Log.e(MainActivity.TAG,"!set alarm to "+Task.getTimeByString(mWakeTime)+" id= "+Long.toString(mID));
 
     }
 

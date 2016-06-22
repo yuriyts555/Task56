@@ -1,8 +1,10 @@
 package com.devlight.taskmanager;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -34,6 +36,7 @@ import io.realm.RealmResults;
 public class MainActivity extends AppCompatActivity   implements FragmentOkCancelDialog.DialogYesNoListener, FragmentDialogDateTime.ITimeUpdater{
 
 
+	public static final String BROADCAST_UPDATE = "com.devlight.taskmanager.UPDATEMAINWINDOW";
 	public static final String TAG = "TASKMANAGER";
 
 	Toolbar toolBar;
@@ -56,6 +59,43 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 	com.devlight.utils.PrefsHelper mPrefsHelper;  //save list in sharedpreferences helper
 	
 	Random mRandom = new Random();
+
+	UpdateReceiver mUpdateReceiver = null;
+	Boolean mUpdateReceiverIsRegistered = false;
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		if (mUpdateReceiver == null) mUpdateReceiver=new UpdateReceiver();
+
+		if (!mUpdateReceiverIsRegistered) {
+			registerReceiver(mUpdateReceiver, new IntentFilter(BROADCAST_UPDATE));
+			mUpdateReceiverIsRegistered = true;
+		}
+	}
+
+	@Override
+	protected void onPause() {
+
+		if (mUpdateReceiverIsRegistered) {
+
+			unregisterReceiver(mUpdateReceiver);
+			mUpdateReceiverIsRegistered = false;
+		}
+
+		super.onPause();
+	}
+
+	public class UpdateReceiver extends BroadcastReceiver
+	{
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+
+			if (mRecycleAdapter!=null) mRecycleAdapter.notifyDataSetChanged();
+		}
+	}
 	
 	@Override
 	public void onBackPressed() {
@@ -96,6 +136,8 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 
 		}
 	}
+
+
 
 	
 	
@@ -157,7 +199,7 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 		RealmConfiguration conf = getRealmConfig();
 		realm = Realm.getInstance(conf);
 		RealmResults<Task> results = realm.where(Task.class).findAll();
-		Log.e(MainActivity.TAG,"realm.where(Task.class).findAll() = "+Integer.toString(results.size()));
+
 		mRecycleAdapter = new TaskRecycleAdapter(this,results);
 
 
@@ -192,8 +234,9 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 
 
     }
-	
-	
+
+
+
 	//Change item start/end date/time
 	void showDateDialog(long mID,long timeStart, long timeEnd,int timeType) {
 

@@ -251,7 +251,7 @@ public class TaskRecycleAdapter extends RealmBasedRecyclerViewAdapter<Task,TaskR
 			@Override
 			public void onClick(View view) {
 
-				Log.e(MainActivity.TAG,"btnResetTimeEnd");
+			
 
 				Task mTask=realmResults.get(position);
 
@@ -278,7 +278,7 @@ public class TaskRecycleAdapter extends RealmBasedRecyclerViewAdapter<Task,TaskR
 			@Override
 			public void onClick(View view) {
 
-				Log.e(MainActivity.TAG,"swipe click");
+			
 
 				if (holder.mSwipe.getOpenStatus() != SwipeLayout.Status.Close) return;
 

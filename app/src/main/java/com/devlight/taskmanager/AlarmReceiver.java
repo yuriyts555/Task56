@@ -63,7 +63,17 @@ public class AlarmReceiver extends BroadcastReceiver {
         notificationManager.notify(AlarmWork.long2Int(mTask.getID()), b.build());
 
 
+        instance.beginTransaction();
+        mTask.setEndTime(System.currentTimeMillis());
+        instance.commitTransaction();
+
+
         instance.close();
+
+
+        //Update main window
+        Intent i = new Intent(MainActivity.BROADCAST_UPDATE);
+        context.sendBroadcast(i);
 
     }
 
