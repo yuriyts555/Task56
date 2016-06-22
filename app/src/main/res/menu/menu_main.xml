@@ -1,0 +1,148 @@
+  <menu
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".MainActivity">
+        
+      
+<!--        <item
+            android:id="@+id/action_load"
+            android:orderInCategory="100"
+            android:title="@string/load"
+            app:showAsAction="ifRoom" /> -->
+            
+            
+<item
+     android:id="@+id/action_element"
+     android:orderInCategory="100"
+     android:icon="@drawable/element"
+ 	 android:title="@string/tasks"
+ 	 android:background="@drawable/btn_selector"
+     app:showAsAction="ifRoom" >
+            
+  <menu>      
+        <item
+            android:id="@+id/action_add"
+            android:orderInCategory="100"
+            android:icon="@drawable/plus"
+            android:title="@string/add"
+            android:background="@drawable/btn_selector"
+            app:showAsAction="ifRoom" />
+            
+        
+        <item
+            android:id="@+id/action_fill"
+            android:orderInCategory="100"
+            android:icon="@drawable/generate"
+            android:title="@string/fill_list"
+            android:background="@drawable/btn_selector"
+            app:showAsAction="ifRoom" >            
+        </item>
+        
+         <item
+            android:id="@+id/action_clear"
+            android:orderInCategory="100"
+            android:icon="@drawable/clear"
+            android:title="@string/clear"
+            android:background="@drawable/btn_selector"
+            app:showAsAction="ifRoom" >            
+        </item>
+ </menu>
+ </item>    
+ 
+
+
+
+
+
+
+
+
+<item
+     android:id="@+id/action_sort"
+     android:orderInCategory="100"
+     android:icon="@drawable/sort"
+ 	 android:title="@string/sort"
+ 	 android:background="@drawable/btn_selector"
+     app:showAsAction="ifRoom" >
+            
+  <menu> 
+
+          <group android:id="@+id/group_sort"
+           android:checkableBehavior="single"
+           android:visible="true"
+           android:enabled="true"
+          
+            >
+      
+      
+        <item
+            android:id="@+id/action_a_z"
+            android:orderInCategory="100"
+            android:icon="@drawable/a_z"
+            android:title="@string/name_a_z"
+         
+            android:background="@drawable/btn_selector"
+            app:showAsAction="ifRoom" />
+            
+        
+        <item
+            android:id="@+id/action_z_a"
+            android:orderInCategory="100"
+            android:icon="@drawable/z_a"
+            android:title="@string/name_z_a"
+      
+            android:background="@drawable/btn_selector"
+            app:showAsAction="ifRoom" >            
+        </item>
+        
+         <item
+            android:id="@+id/action_date_dec"
+            android:orderInCategory="100"
+            android:icon="@drawable/date_dec"
+            android:title="@string/date_dec"
+      
+            android:background="@drawable/btn_selector"
+            app:showAsAction="ifRoom" >            
+        </item>
+        
+        <item
+            android:id="@+id/action_date_inc"
+            android:orderInCategory="100"
+            android:icon="@drawable/date_inc"
+            android:title="@string/date_inc"
+ 
+            android:background="@drawable/btn_selector" 
+            app:showAsAction="ifRoom" >            
+        </item>
+        
+        </group>
+        
+ </menu>
+ </item> 
+
+
+        <item
+            android:id="@+id/action_prefs"
+            android:orderInCategory="100"
+            android:icon="@drawable/gear"
+            android:title="@string/prefs"
+            android:checkable="true"
+            android:background="@drawable/btn_selector" 
+            app:showAsAction="ifRoom" >            
+        </item>
+        
+        
+         <item
+            android:id="@+id/action_exit"
+            android:orderInCategory="101"
+            android:icon="@drawable/exit"
+            android:title="@string/exit"
+            android:checkable="true"
+            android:background="@drawable/btn_selector" 
+            app:showAsAction="ifRoom" >            
+        </item>
+
+
+
+    </menu>

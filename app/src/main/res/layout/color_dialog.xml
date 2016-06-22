@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/color_dialogView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center" >
+
+    <RelativeLayout
+        android:id="@+id/color_viewContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/color_spacer"
+        android:paddingLeft="@dimen/color_spacer"
+        android:gravity="center_horizontal"
+        android:paddingRight="@dimen/color_spacer"
+        android:paddingTop="@dimen/color_spacer" android:layout_gravity="center">
+
+        <com.devlight.dialogs.ColorKotak
+            android:id="@+id/color_viewSatBri"
+            android:layout_width="@dimen/color_hsvWidth"
+            android:layout_height="@dimen/color_hsvHeight"
+            android:layerType="software" />
+
+        <ImageView
+            android:id="@+id/color_viewHue"
+            android:layout_width="@dimen/color_hueWidth"
+            android:layout_height="@dimen/color_hsvHeight"
+            android:layout_marginLeft="@dimen/color_spacer"
+            android:layout_toRightOf="@id/color_viewSatBri"
+            android:scaleType="fitXY"
+            android:src="@drawable/color_hue" />
+
+        <ImageView
+            android:id="@+id/color_cursor"
+            android:layout_width="20dp"
+            android:layout_height="9dp"
+            android:scaleType="matrix"
+            android:src="@drawable/color_cursor" />
+
+        <ImageView
+            android:id="@+id/color_target"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:scaleType="matrix"
+            android:src="@drawable/color_target" />
+
+        <LinearLayout
+            android:id="@+id/color_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/color_viewSatBri"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/color_spacer"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <View
+                android:id="@+id/color_warnaLama"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:background="#faa" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/color_spacer"
+                android:paddingRight="@dimen/color_spacer"
+                android:src="@drawable/color_arrow_right" />
+
+            <View
+                android:id="@+id/color_warnaBaru"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:background="#aaf" />
+        </LinearLayout>
+        
+                <LinearLayout
+        android:layout_width="@dimen/color_btnswidth"
+                    android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/color_spacer"
+            android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_below="@id/color_state"
+        android:layout_height="wrap_content" >
+        
+                <Button
+                    android:id="@+id/btnOk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_selector"
+                    android:text="@string/save" />
+                
+                                <Button
+                                    android:id="@+id/btnCancel"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/btn_selector"
+                                    android:text="@string/exit" />
+            
+    </LinearLayout>
+        
+        
+    </RelativeLayout>
+    
+
+</FrameLayout>

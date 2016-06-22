@@ -1,0 +1,25 @@
+  <menu
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".CreateTaskActivity">
+        
+         <item
+            android:id="@+id/action_cancel"
+            android:orderInCategory="100"
+            android:icon="@drawable/clear"
+            android:title="@string/cancel"
+            android:background="@drawable/btn_selector"
+            app:showAsAction="always|withText" />
+         
+         
+                  <item
+            android:id="@+id/action_ready"
+            android:orderInCategory="100"
+            android:icon="@drawable/ready"
+            android:title="@string/ready"
+            android:background="@drawable/btn_selector"
+            app:showAsAction="always|withText" />
+
+
+    </menu>

@@ -1,0 +1,18 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="swipe_height">40dp</dimen>
+    <dimen name="space_height">20dp</dimen>
+    
+   <dimen name="color_hsvHeight">240dp</dimen>
+	<dimen name="color_hsvWidth">240dp</dimen>
+	<dimen name="color_hueWidth">50dp</dimen>
+	<dimen name="color_spacer">1dp</dimen>
+<dimen name="color_btnswidth">292dp</dimen>
+
+
+
+</resources>

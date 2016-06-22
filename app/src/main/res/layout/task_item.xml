@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutTaskItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.daimajia.swipe.SwipeLayout xmlns:swipe="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        swipe:leftEdgeSwipeOffset="0dp"
+        swipe:rightEdgeSwipeOffset="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/swipe_height"
+            android:gravity="center"
+            android:background="@color/white"
+            android:weightSum="10">
+
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="@dimen/swipe_height"
+                android:layout_height="@dimen/swipe_height"
+                android:background="@drawable/delete"
+                android:text="" />
+
+
+        <LinearLayout
+            android:layout_width="@dimen/swipe_height"
+            android:layout_height="@dimen/swipe_height"/>
+
+
+
+            <Button
+                android:id="@+id/btnEdit"
+                android:layout_width="@dimen/swipe_height"
+                android:layout_height="@dimen/swipe_height"
+                android:background="@drawable/edit"
+                android:text="" />
+
+            <LinearLayout
+                android:layout_width="@dimen/swipe_height"
+                android:layout_height="@dimen/swipe_height"/>
+
+
+            <Button
+                android:id="@+id/btnResetTimeBeg"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/swipe_height"
+                android:background="@drawable/btn_selector"
+                android:text="@string/reset_time_start" />
+
+
+            <LinearLayout
+                android:layout_width="@dimen/swipe_height"
+                android:layout_height="@dimen/swipe_height"/>
+
+            <Button
+                android:id="@+id/btnResetTimeEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/swipe_height"
+                android:background="@drawable/btn_selector"
+                android:text="@string/reset_time_end" />
+        
+
+
+           
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:elevation="5dp"
+            android:padding="10dp">
+
+                <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:gravity="left"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/darkblue" />
+    
+        <TextView
+        android:id="@+id/tvComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"       
+        android:gravity="left"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+        </LinearLayout>
+        
+        
+    </com.daimajia.swipe.SwipeLayout>
+</LinearLayout>

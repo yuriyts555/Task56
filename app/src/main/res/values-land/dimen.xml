@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="color_hsvWidth">240dp</dimen>
+	<dimen name="color_hsvHeight">120dp</dimen>
+	<dimen name="color_btnswidth">350dp</dimen>
+</resources>

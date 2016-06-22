@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Task1</string>
+    
+    
+    <string name="add">Додати</string>
+    <string name="save">Зберегти</string>
+    <string name="exit">Вихід</string>
+    <string name="clear">Очистити</string>
+    <string name="load">Завантажити</string>
+    <string name="tasks">Завдання</string>
+    <string name="sort">Сортувати</string>
+    <string name="prefs">Налаштування</string>
+
+    <string name="delete">Видалити</string>
+    <string name="edit">Редагувати</string>
+    <string name="reset_time_start">Скинути час початку</string>
+    <string name="reset_time_end">Скинути час закінчення</string>
+
+    <string name="auto_finish_after">Закінчити після</string>
+    <string name="minutes">хвилин</string>
+    <string name="min_header_length">Мінімальна довжина заголовку</string>
+    
+    <string name="restore">Відновити</string>
+    <string name="select_color">Виберіть колір</string>
+    
+    <string name="color0">Не розпочаті завдання</string>
+    <string name="color1">Розпочаті, але не завершені</string>
+    <string name="color2">Завершені</string>
+    
+    <string name="exit_without_save">Натисніть ще раз, щоб вийте без збереження</string>
+    
+    <string name="cancel">Скасувати</string>
+    <string name="ready">Готово</string>
+    
+    <string name="confirmexit">Натисніть ще раз, щоб вийти з додатку</string>
+    <string name="confirm_clear">Очистити всі завдання?</string>
+    
+    <string name="cur_tasks">Поточні завдання</string>
+    
+    <string name="name_a_z">Назва А-Я</string>
+    <string name="name_z_a">Назва Я-А</string>
+    <string name="date_dec">Дата (за спаданням)</string>
+    <string name="date_inc">Дата (за зростанням)</string>
+    
+    <string name="start_time">Час початку:</string>
+    <string name="end_time">Час закінчення:</string>
+    <string name="spent_time">Витраченний час:</string>
+    
+    <string name="set_start_time">Виберіть час початку</string>
+    <string name="set_end_time">Виберіть час закінчення</string>
+    <string name="set_timeend_error">Час закінчення має бути більший часу початку!</string>
+    <string name="set_timestart_error">Час початку має бути менший часу закінчення!</string>
+    
+    <string name="fill_list">Заповнити список</string>
+
+    <string name="task_auto_finished">Завадання автоматично завершене згідно маскимального часу виконання</string>
+
+
+</resources>
