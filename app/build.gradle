@@ -11,8 +11,8 @@ android {
         applicationId "com.devlight.taskmanager"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 6
+        versionName "6.0"
     }
     buildTypes {
         release {
