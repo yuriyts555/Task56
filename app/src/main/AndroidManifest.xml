@@ -25,7 +25,9 @@
         </activity>
 
 
-        <activity android:name="com.devlight.taskmanager.MainActivity">
+        <activity
+            android:launchMode= "singleInstance"
+            android:name="com.devlight.taskmanager.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.devlight.taskmanager.MainActivity" />

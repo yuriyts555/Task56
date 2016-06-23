@@ -525,7 +525,12 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 		instance.commitTransaction();
 		instance.close();
 	}
-    		
+
+
+
+
+
+
     void addTasksToListView() //Fill list, with item count three time much more, than items visible
     {
 

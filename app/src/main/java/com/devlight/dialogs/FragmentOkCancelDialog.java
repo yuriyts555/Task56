@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import java.util.ArrayList;
+
 public class FragmentOkCancelDialog extends DialogFragment {
 	
 
@@ -18,9 +20,9 @@ public class FragmentOkCancelDialog extends DialogFragment {
 	{
 
 	}
-	
+
     public static FragmentOkCancelDialog newInstance(int mDialogCode,String mMessage) {
-    	FragmentOkCancelDialog mInstance = new FragmentOkCancelDialog();
+        FragmentOkCancelDialog mInstance = new FragmentOkCancelDialog();
 
         // Supply num input as an argument.
         Bundle args = new Bundle();
@@ -41,11 +43,11 @@ public class FragmentOkCancelDialog extends DialogFragment {
 	}
 
 	
-	public FragmentOkCancelDialog(int mDialogCode,String mMessage)
+/*	public FragmentOkCancelDialog(int mDialogCode,String mMessage)
 	{
 		this.mDialogCode = mDialogCode;
 		this.mMessage  = mMessage;
-	}
+	}*/
 
 	public interface DialogYesNoListener {
         void onDialogYes(int mDialogCode);
@@ -53,13 +55,13 @@ public class FragmentOkCancelDialog extends DialogFragment {
         void onDialogNo(int mDialogCode);
     }
 
-    @Override
+/*    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (!(activity instanceof DialogYesNoListener)) {
             throw new ClassCastException(activity.toString() + " must implement YesNoListener");
         }
-    }
+    }*/
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

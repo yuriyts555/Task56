@@ -2,6 +2,8 @@ package com.devlight.taskmanager;
 
 
 import com.devlight.dialogs.FragmentDialogDateTime;
+import com.devlight.dialogs.FragmentListDialog;
+import com.devlight.dialogs.FragmentOkCancelDialog;
 import com.devlight.dialogs.FragmentOkDialog;
 import com.devlight.task.*;
 
@@ -30,7 +32,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateTaskActivity extends AppCompatActivity implements FragmentDialogDateTime.ITimeUpdater{
+public class CreateTaskActivity extends AppCompatActivity implements FragmentDialogDateTime.ITimeUpdater,
+																	 FragmentListDialog.DialogListResultListener{
 
 
 	public static final int SPEECH_RESULTS_HEADER = 5;
@@ -61,6 +64,11 @@ public class CreateTaskActivity extends AppCompatActivity implements FragmentDia
 	long mStartTime = - 1; //Task start time
 	long mEndTime = -1;  //Task end time
 	long mAutoFinishAfterMinutes = -1;  //Task auto finish after this minutes
+
+   //Speech recognition
+	ArrayList<String> mWordList = null;
+	boolean mShowHeaderWordSelect = false;
+	boolean mShowCommentWordSelect = false;
 	
 	@Override
 	public void onBackPressed() {
@@ -277,32 +285,68 @@ public class CreateTaskActivity extends AppCompatActivity implements FragmentDia
 
 	}
 
+
+	@Override
+	public void onListSelected(int mDialogCode, String result) {
+
+		if (mDialogCode == SPEECH_RESULTS_COMMENT) etComment.setText(result);
+		if (mDialogCode == SPEECH_RESULTS_HEADER) etHeader.setText(result);
+
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		//get spech result
 		if (requestCode == SPEECH_RESULTS_COMMENT && resultCode == Activity.RESULT_OK) {
 
-			ArrayList<String> suggestedWords = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-			if (suggestedWords.size() ==0) return;
+			mWordList = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+			if (mWordList.size() ==0) return;
 
-			//String _str = etComment.getText().toString()+" "+suggestedWords.get(0);
-			etComment.setText(suggestedWords.get(0));
-			//wordList.setAdapter(new ArrayAdapter<String>(this, R.layout.word, suggestedWords));
+
+
+			mShowCommentWordSelect = true;
+
+
+		//	etComment.setText(suggestedWords.get(0));
+
 		}
 
 		if (requestCode == SPEECH_RESULTS_HEADER && resultCode == Activity.RESULT_OK) {
 
-			ArrayList<String> suggestedWords = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-			if (suggestedWords.size() ==0) return;
+			mWordList = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+			if (mWordList.size() ==0) return;
 
-			//String _str = etHeader.getText().toString()+" "+suggestedWords.get(0);
-			etHeader.setText(suggestedWords.get(0));
 
-			//wordList.setAdapter(new ArrayAdapter<String>(this, R.layout.word, suggestedWords));
+			//etHeader.setText(suggestedWords.get(0));
+			mShowHeaderWordSelect = true;
+
+
+			//FragmentListDialog mDialog = FragmentListDialog.newInstance(SPEECH_RESULTS_HEADER,suggestedWords);
+			//mDialog.show(getSupportFragmentManager(), "");
 		}
 
 
+	}
+
+	@Override
+	protected void onResumeFragments()
+	{
+		super.onResumeFragments();
+
+			if (mShowCommentWordSelect)
+			{
+				mShowCommentWordSelect = false;
+				FragmentListDialog mDialog = FragmentListDialog.newInstance(SPEECH_RESULTS_COMMENT, mWordList);
+				mDialog.show(getSupportFragmentManager(), "");
+			}
+
+			if (mShowHeaderWordSelect)
+			{
+				mShowHeaderWordSelect = false;
+				FragmentListDialog mDialog = FragmentListDialog.newInstance(SPEECH_RESULTS_HEADER, mWordList);
+				mDialog.show(getSupportFragmentManager(), "");
+			}
 	}
 
     @Override
@@ -409,6 +453,7 @@ public class CreateTaskActivity extends AppCompatActivity implements FragmentDia
 		tvSpentTime.setText(Task.getTimeDifString(mStartTime,mEndTime));
 
 	}
+
 
 
 }
