@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Task1</string>
-    
+    <string name="app_name">Список завдань</string>
+
+
+
+    <string name="maxtime">Максимальний час виконання</string>
+
+    <string name="tab1">Список завданнь</string>
+    <string name="tab2">Статистика</string>
+
+    <string name="start">Розпочати</string>
+    <string name="finish">Закінчити</string>
+    <string name="pause">Пауза</string>
+    <string name="resume">Продовжити</string>
+    <string name="repeat">Повторити</string>
     
     <string name="add">Додати</string>
     <string name="save">Зберегти</string>
@@ -14,15 +26,20 @@
     <string name="prefs">Налаштування</string>
 
     <string name="delete">Видалити</string>
+    <string name="hours">годин</string>
     <string name="edit">Редагувати</string>
     <string name="reset_time_start">Скинути час початку</string>
     <string name="reset_time_end">Скинути час закінчення</string>
+    <string name="reset_time">Скинути час</string>
 
-    <string name="auto_finish_after">Закінчити після</string>
-    <string name="minutes">хвилин</string>
+
+    <string name="auto_finish_after">Закінчити автоматично після</string>
+    <string name="auto_finish_all_after">Закінчувати завдання автоматично після</string>
+    <string name="minutes">хв</string>
     <string name="min_header_length">Мінімальна довжина заголовку</string>
     
     <string name="restore">Відновити</string>
+    <string name="isperiodic">Повторюється періодично</string>
     <string name="select_color">Виберіть колір</string>
     
     <string name="color0">Не розпочаті завдання</string>
@@ -56,6 +73,11 @@
     <string name="fill_list">Заповнити список</string>
 
     <string name="task_auto_finished">Завадання автоматично завершене згідно маскимального часу виконання</string>
+
+    <string name="errloadimage">Помилка! Неможливо завантажити зображення!</string>
+
+    <string name="update_stats">Обновити статистику</string>
+
 
 
 </resources>

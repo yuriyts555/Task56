@@ -80,6 +80,44 @@
     
 
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_height"
+        android:orientation="horizontal" >
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tvAutoFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/auto_finish_all_after"
+           />
+
+        <EditText
+            android:id="@+id/etAutoFinishAll"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/tvMinutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/minutes"
+          />
+
+    </LinearLayout>
     
     
 

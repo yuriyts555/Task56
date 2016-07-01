@@ -1,6 +1,10 @@
 package com.devlight.task;
 
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -34,28 +38,75 @@ public class Task extends RealmObject {
 	@Ignore
 	public final static String KEY_STARTTIME = "mStartTime";
 	@Ignore
+	public final static String KEY_ISPERIODIC = "mIsPeriodic";
+	@Ignore
+	public final static String KEY_ISPAUSED = "mIsPaused";
+	@Ignore
+	public final static String KEY_PERIODICHOURS = "mPeriodicHours";
+	@Ignore
 	public final static String KEY_ENDTIME = "mEndTime";
-
+	@Ignore
+	public final static String KEY_AVATARPATH = "mAvatarPath";
 	@Ignore
 	public final static int MIN_HEADER_LENGTH = 5;
+	@Ignore
+	public static final String DATE_TIME_PRESENTATION = "yyyy.MM.dd HH:mm";
 
 
-	private String mHeader;
-	private String mComment;
+	private String mHeader;  //Header
+	private String mComment; //Comment
 
 	private long mStartTime = - 1; //Task start time
 	private long mEndTime = -1;  //Task end time
-
 	private long mResetTime = -1;  // task end was reseted
 
 	private long mAutoFinishAfterMinutes = -1;  //Task auto finish after this minutes
 
-	
-	
-	public static final String DATE_TIME_PRESENTATION = "yyyy.MM.dd HH:mm";
-	
 
 
+	private long mPeriodicHours = -1;  //Task periodic hours
+	private boolean mIsPeriodic = false;  //is task priodic
+	private boolean mIsPaused= false;  //is task priodic
+    private String mAvatarPath;  //path to avatar image file
+
+
+
+
+
+	public boolean isPaused() {
+		return mIsPaused;
+	}
+
+	public void setIsPaused(boolean value ) {
+		this.mIsPaused = value;
+	}
+
+
+	public String getAvatarPath() {
+		return mAvatarPath;
+	}
+
+	public void setAvatarPath(String path ) {
+		this.mAvatarPath = path;
+	}
+
+
+	public boolean isPeriodic() {
+		return mIsPeriodic;
+	}
+
+	public void setIsPeriodic(boolean mIsPeriodic) {
+		this.mIsPeriodic = mIsPeriodic;
+	}
+
+
+	public long getPeriodicHours() {
+		return mPeriodicHours;
+	}
+
+	public void setPeriodicHours(long value) {
+		this.mPeriodicHours = value;
+	}
 	public void setID(long _id)
 	{
 	  id = _id;

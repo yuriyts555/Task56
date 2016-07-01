@@ -10,6 +10,9 @@
             android:orderInCategory="100"
             android:title="@string/load"
             app:showAsAction="ifRoom" /> -->
+
+
+
             
             
 <item
@@ -129,8 +132,19 @@
             android:title="@string/prefs"
             android:checkable="true"
             android:background="@drawable/btn_selector" 
-            app:showAsAction="ifRoom" >            
+            app:showAsAction="always" >
         </item>
+
+
+      <item
+          android:id="@+id/action_update_stats"
+          android:orderInCategory="100"
+          android:icon="@drawable/update"
+          android:title="@string/update_stats"
+          android:checkable="true"
+          android:background="@drawable/btn_selector"
+          app:showAsAction="always" >
+      </item>
         
         
          <item
@@ -140,7 +154,7 @@
             android:title="@string/exit"
             android:checkable="true"
             android:background="@drawable/btn_selector" 
-            app:showAsAction="ifRoom" >            
+            app:showAsAction="always" >
         </item>
 
 

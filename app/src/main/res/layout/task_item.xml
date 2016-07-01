@@ -25,10 +25,10 @@
                 android:background="@drawable/delete"
                 android:text="" />
 
+            <LinearLayout
+                android:layout_width="@dimen/space"
+                android:layout_height="@dimen/swipe_height"/>
 
-        <LinearLayout
-            android:layout_width="@dimen/swipe_height"
-            android:layout_height="@dimen/swipe_height"/>
 
 
 
@@ -39,41 +39,92 @@
                 android:background="@drawable/edit"
                 android:text="" />
 
+
+
             <LinearLayout
-                android:layout_width="@dimen/swipe_height"
+                android:layout_width="@dimen/space"
                 android:layout_height="@dimen/swipe_height"/>
 
 
             <Button
-                android:id="@+id/btnResetTimeBeg"
+                android:id="@+id/btnStartFinish"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/swipe_height"
                 android:background="@drawable/btn_selector"
-                android:text="@string/reset_time_start" />
+                android:text="@string/start" />
+
 
 
             <LinearLayout
-                android:layout_width="@dimen/swipe_height"
+                android:layout_width="@dimen/space"
                 android:layout_height="@dimen/swipe_height"/>
 
+
             <Button
-                android:id="@+id/btnResetTimeEnd"
+                android:id="@+id/btnPauseResume"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/swipe_height"
                 android:background="@drawable/btn_selector"
-                android:text="@string/reset_time_end" />
-        
+                android:text="@string/pause" />
+
+
+
+            <LinearLayout
+                android:layout_width="@dimen/space"
+                android:layout_height="@dimen/swipe_height"/>
+
+
+            <Button
+                android:id="@+id/btnRepeat"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/swipe_height"
+                android:background="@drawable/btn_selector"
+                android:text="@string/repeat" />
+
+
+            <LinearLayout
+                android:layout_width="@dimen/space"
+                android:layout_height="@dimen/swipe_height"/>
+
+
+
+            <Button
+                android:id="@+id/btnResetTime"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/swipe_height"
+                android:background="@drawable/btn_selector"
+                android:text="@string/reset_time" />
 
 
            
         </LinearLayout>
 
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:elevation="5dp"
+            android:padding="10dp">
+
+
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="@dimen/swipe_height"
+                android:layout_height="@dimen/swipe_height"
+                android:background="@drawable/ic_launcher"
+                android:visibility="gone"
+                 />
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:elevation="5dp"
-            android:padding="10dp">
+             >
 
                 <TextView
         android:id="@+id/tvHeader"
@@ -95,6 +146,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
+        </LinearLayout>
         </LinearLayout>
         
         

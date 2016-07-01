@@ -190,30 +190,79 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>
-    
 
 
-<!--     <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_height"
+            android:orientation="horizontal" >
+        </LinearLayout>
+
+
+    <!--Is Periodic-->
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="match_parent"
+        <CheckBox
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/btn_selector"
-            android:text="@string/save" />
+            android:text="@string/isperiodic"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/cbIsPeriodic" />
 
-        <Button
-            android:id="@+id/btnExit"
-            android:layout_width="match_parent"
+
+        <EditText
+            android:id="@+id/etPeriodicHours"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/btn_selector"
-            android:text="@string/exit" />
+            android:inputType="number"
+            android:visibility="gone"
+            android:ems="10" />
 
-    </LinearLayout> -->
+        <TextView
+            android:id="@+id/tvHours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/hours"
+            android:visibility="gone"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_height"
+            android:orientation="horizontal" >
+        </LinearLayout>
+
+
+        <!--     <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_selector"
+                    android:text="@string/save" />
+
+                <Button
+                    android:id="@+id/btnExit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_selector"
+                    android:text="@string/exit" />
+
+            </LinearLayout> -->
 
     </LinearLayout>
 

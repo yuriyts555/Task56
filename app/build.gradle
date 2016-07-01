@@ -47,4 +47,7 @@ dependencies {
     compile 'com.github.thorbenprimke:realm-recyclerview:0.9.20'
 
 
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.2.3'
+
+
 }

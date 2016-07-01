@@ -18,13 +18,13 @@ public class BootReceiver extends BroadcastReceiver {
 
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
 
-            RealmConfiguration conf = MainActivity.getRealmConfig(context);
-            Realm realm = Realm.getInstance(conf);
+
+            Realm realm = ((MApp)context.getApplicationContext()).realm;
             RealmResults<Task> results = realm.where(Task.class).findAll();
 
             AlarmWork.setAllAlarms(context,results);
 
-            realm.close();
+
         }
 
 

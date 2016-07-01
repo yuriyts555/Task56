@@ -11,6 +11,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.devlight.task.Task;
+import com.devlight.task.TaskEvent;
 
 import io.realm.Realm;
 
@@ -28,13 +29,15 @@ public class AlarmReceiver extends BroadcastReceiver {
         Long mID = bundle.getLong(Task.KEY_ID);
 
 
-        Realm instance = Realm.getInstance(MainActivity.getRealmConfig(context));
+        Realm instance = ((MApp)context.getApplicationContext()).realm;
         Task mTask = instance.where(Task.class).equalTo("id", mID).findFirst();
+
+        Log.e(MainActivity.TAG,"Alarm receiver "+Long.toString(mID));
 
         if (mTask == null)
         {
             Log.e(MainActivity.TAG,"Can't find task with id="+Long.toString(mID));
-            instance.close();
+           // instance.close();
             return;
         }
 
@@ -65,10 +68,22 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         instance.beginTransaction();
         mTask.setEndTime(System.currentTimeMillis());
+
+/*        //Write state
+        TaskEvent mEvent = instance.createObject(TaskEvent.class);
+        mEvent.setTaskID(mID);
+        mEvent.setEventTime(System.currentTimeMillis());
+        mEvent.setEvent(TaskEvent.TASK_AUTOFINISHED);*/
+
+
+
+
         instance.commitTransaction();
 
+        TaskEvent.writeNewEvent(instance,mID,TaskEvent.TASK_AUTOFINISHED,System.currentTimeMillis());
+      //  instance.close();
 
-        instance.close();
+
 
 
         //Update main window
@@ -76,6 +91,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         context.sendBroadcast(i);
 
     }
+
+
+
+
 
 
 }

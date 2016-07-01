@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 public class PrefsActivity extends AppCompatActivity implements ColorDialog.IColorUpdate {
@@ -34,6 +36,12 @@ public class PrefsActivity extends AppCompatActivity implements ColorDialog.ICol
     LinearLayout l0;
     LinearLayout l1;
     LinearLayout l2;
+
+
+	EditText etAutoFinishAll;
+
+
+	PrefsHelper mPrefsHelper;
 	
 	
 	@Override
@@ -84,6 +92,12 @@ public class PrefsActivity extends AppCompatActivity implements ColorDialog.ICol
         
         
         setContentView(R.layout.prefs_activity);
+
+		mPrefsHelper = new PrefsHelper(this);
+
+
+		etAutoFinishAll = (EditText) findViewById(R.id.etAutoFinishAll);
+
         
         toolBar = (Toolbar) findViewById(R.id.tbPrefs); //Use toolbar
         setSupportActionBar(toolBar);  
@@ -95,9 +109,11 @@ public class PrefsActivity extends AppCompatActivity implements ColorDialog.ICol
         //Get colors
 		mPrefs = getSharedPreferences(PrefsHelper.PREFS_NAME, Context.MODE_PRIVATE);
 		mEditor = mPrefs.edit();
-		mColors[0] = mPrefs.getInt(PrefsHelper.KEY_COLOR0, getResources().getColor(R.color.green_bkg));
-		mColors[1] = mPrefs.getInt(PrefsHelper.KEY_COLOR1, getResources().getColor(R.color.yellow_bkg));
-		mColors[2] = mPrefs.getInt(PrefsHelper.KEY_COLOR2, getResources().getColor(R.color.red_bkg));
+		mColors[0] = mPrefs.getInt(PrefsHelper.KEY_COLOR0, ContextCompat.getColor(this,R.color.green_bkg));
+		mColors[1] = mPrefs.getInt(PrefsHelper.KEY_COLOR1, ContextCompat.getColor(this,R.color.yellow_bkg));
+		mColors[2] = mPrefs.getInt(PrefsHelper.KEY_COLOR2, ContextCompat.getColor(this,R.color.red_bkg));
+
+		etAutoFinishAll.setText(Long.toString(mPrefsHelper.getDefaultAutoFinishTime()));
         
         
         l0=(LinearLayout) findViewById(R.id.layoutColor0);
@@ -181,9 +197,9 @@ public class PrefsActivity extends AppCompatActivity implements ColorDialog.ICol
         
         if (id == R.id.action_restore)
         {
-    		mColors[0] = getResources().getColor(R.color.green_bkg);
-    		mColors[1] = getResources().getColor(R.color.yellow_bkg);
-    		mColors[2] = getResources().getColor(R.color.red_bkg);
+			mColors[0] = mPrefs.getInt(PrefsHelper.KEY_COLOR0, ContextCompat.getColor(this,R.color.green_bkg));
+			mColors[1] = mPrefs.getInt(PrefsHelper.KEY_COLOR1, ContextCompat.getColor(this,R.color.yellow_bkg));
+			mColors[2] = mPrefs.getInt(PrefsHelper.KEY_COLOR2, ContextCompat.getColor(this,R.color.red_bkg));
     		
     		
             l0.setBackgroundColor(mColors[0]);        
@@ -197,6 +213,11 @@ public class PrefsActivity extends AppCompatActivity implements ColorDialog.ICol
 			mEditor.putInt(PrefsHelper.KEY_COLOR0, mColors[0]);
 			mEditor.putInt(PrefsHelper.KEY_COLOR1, mColors[1]);
 			mEditor.putInt(PrefsHelper.KEY_COLOR2, mColors[2]);
+			;
+
+			long mAutoFiishTime = getLongFromTextEdit(etAutoFinishAll);
+			mEditor.putLong(PrefsHelper.KEY_AUTOFINISHTIME,mAutoFiishTime);
+
 			mEditor.commit();
         	
         	//return task to previous activity
@@ -210,6 +231,21 @@ public class PrefsActivity extends AppCompatActivity implements ColorDialog.ICol
         return super.onOptionsItemSelected(item);
     }
 
+
+	private long getLongFromTextEdit(EditText mEditText)
+	{
+		String _str = mEditText.getText().toString();
+		long i=0;
+
+		try {
+
+			i = Long.parseLong(_str);
+			return i;
+		}catch(Exception e)
+		{
+			return 0;
+		}
+	}
 
 	@Override
 	public void UpdateColor(int value,int index ) {

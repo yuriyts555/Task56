@@ -25,23 +25,25 @@ public class PrefsHelper {
 	public final static String KEY_COLOR0 = "COLOR0"; 
 	public final static String KEY_COLOR1 = "COLOR1"; 
 	public final static String KEY_COLOR2 = "COLOR2";
-	public final static String DEFAULT_SORT_MODE = "DEFAULT_SORT_MODE"; 
-	
+	public final static String DEFAULT_SORT_MODE = "DEFAULT_SORT_MODE";
+
+	public final static String KEY_AUTOFINISHTIME = "AUTOFINISHTIME";
+
 	SharedPreferences mPrefs;
 	Editor mEditor;
 
-	RealmConfiguration realmConfig;
-	Realm realm;
+//	RealmConfiguration realmConfig;
+	//Realm realm;
 	
 	public PrefsHelper(Context context)
 	{
 		mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);	
 		mEditor = mPrefs.edit();
 
-		realmConfig = new RealmConfiguration.Builder(context).build();
-		Realm.setDefaultConfiguration(realmConfig);
+		//realmConfig = new RealmConfiguration.Builder(context).build();
+		//Realm.setDefaultConfiguration(realmConfig);
 
-		realm = Realm.getDefaultInstance();
+		//realm = Realm.getDefaultInstance();
 	}
 	
 	
@@ -68,8 +70,27 @@ public class PrefsHelper {
 	
 	public int getDefaultSortMode()
 	{
-		return mPrefs.getInt("DEFAULT_SORT_MODE", TaskRecycleAdapter.SORTMODE_A_Z);
+		return mPrefs.getInt(DEFAULT_SORT_MODE, TaskRecycleAdapter.SORTMODE_A_Z);
 	}
+
+
+
+
+	public long getDefaultAutoFinishTime()
+	{
+		return mPrefs.getLong(KEY_AUTOFINISHTIME, 60L);
+	}
+
+
+	public void saveDefaultAutoFinishTime(long time) {
+
+
+		mEditor.putLong(KEY_AUTOFINISHTIME, time);
+		mEditor.commit();
+
+	}
+
+
 	
 	public void save(String name,ArrayList<String> value)
 	{

@@ -26,9 +26,21 @@ public class AlarmWork {
         }
 
 
-       //Intent intent = new Intent(this, MyService.class);
-       // PendingIntent pintent = PendingIntent.getService(this, 0, intent, 0);
-       // alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 30*1000, pintent);
+
+    }
+
+
+
+    static public void cancelAllAlarms (Context mContext,RealmResults<Task> mTasks)
+    {
+
+
+        AlarmManager mAlarmManger = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+
+        for (Task mTask: mTasks )
+            cancelAlarm(mAlarmManger,mTask,mContext);
+
+
 
     }
 
@@ -115,14 +127,14 @@ public class AlarmWork {
 
         int code = long2Int(mID);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext.getApplicationContext(), 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext.getApplicationContext(), code, intent, 0);
 
 
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, mWakeTime, pendingIntent);
 
 
-       // Log.e(MainActivity.TAG,"!set alarm to "+Task.getTimeByString(mWakeTime)+" id= "+Long.toString(mID));
+        Log.e(MainActivity.TAG,"!set alarm to "+Task.getTimeByString(mWakeTime)+" id= "+Long.toString(mID));
 
     }
 

@@ -14,13 +14,20 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.TabHost;
 
 import com.devlight.dialogs.FragmentDialogDateTime;
 import com.devlight.dialogs.FragmentOkCancelDialog;
+import com.devlight.dialogs.FragmentResetTimeDialog;
 import com.devlight.task.Task;
 import com.devlight.utils.PrefsHelper;
 
@@ -28,16 +35,21 @@ import java.util.Random;
 
 import co.moonmonkeylabs.realmrecyclerview.RealmRecyclerView;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 
 
-public class MainActivity extends AppCompatActivity   implements FragmentOkCancelDialog.DialogYesNoListener, FragmentDialogDateTime.ITimeUpdater{
+public class MainActivity extends AppCompatActivity   implements FragmentOkCancelDialog.DialogYesNoListener,
+		                                                         FragmentDialogDateTime.ITimeUpdater,
+																	FragmentResetTimeDialog.DialogResetTimeListener{
 
 
 	public static final String BROADCAST_UPDATE = "com.devlight.taskmanager.UPDATEMAINWINDOW";
 	public static final String TAG = "TASKMANAGER";
+
+
+	ExpandableListView mExpListView = null;
+	StatisticListAdapter mStatisticListAdapter = null;
 
 	Toolbar toolBar;
 
@@ -54,7 +66,7 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 	TaskRecycleAdapter mRecycleAdapter;  //List adaptor
 	RealmRecyclerView mRecyclerView;
 
-
+	Animation mRotationAnim;
 
 	com.devlight.utils.PrefsHelper mPrefsHelper;  //save list in sharedpreferences helper
 	
@@ -85,6 +97,19 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 		}
 
 		super.onPause();
+	}
+
+	@Override
+	public void onResetStartTime(long mID) {
+
+		mRecycleAdapter.onResetStartTime(mID);
+	}
+
+	@Override
+	public void onResetEndTime(long mID) {
+
+		mRecycleAdapter.onResetEndTime(mID);
+
 	}
 
 	public class UpdateReceiver extends BroadcastReceiver
@@ -145,73 +170,80 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 
 
 
-	private RealmConfiguration realmConfiguration;
-	private Realm realm;
-
-	protected void resetRealm() {
-		Realm.deleteRealm(getRealmConfig());
-	}
-
-	protected RealmConfiguration getRealmConfig() {
-
-		if (realmConfiguration == null) {
-			realmConfiguration = new RealmConfiguration
-					.Builder(this)
-					.name("mtaskmanger.realm")
-					.deleteRealmIfMigrationNeeded()
-					.build();
-		}
-		return realmConfiguration;
-	}
 
 
-	public static  RealmConfiguration getRealmConfig(Context mContext) {
-
-		return new RealmConfiguration
-					.Builder(mContext)
-					.name("mtaskmanger.realm")
-					.deleteRealmIfMigrationNeeded()
-					.build();
 
 
-	}
+
    
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        //setContentView(R.layout.main_activity);
+
+
+		//load animation
+		mRotationAnim = AnimationUtils.loadAnimation(this, R.anim.roation);
+		mRotationAnim.setRepeatCount(Animation.INFINITE);
+
+
+		//TABHOST
+		setContentView(R.layout.main_activity);
+
+		TabHost tabHost = (TabHost)findViewById(R.id.tabHost);
+		tabHost.setup();
+
+
+
+		TabHost.TabSpec spec = tabHost.newTabSpec(getString(R.string.tab1));
+		spec.setContent(R.id.tabContent);
+		spec.setIndicator(getString(R.string.tab1));
+		tabHost.addTab(spec);
+
+
+		spec = tabHost.newTabSpec(getString(R.string.tab2));
+		spec.setContent(R.id.tabStatistic);
+		spec.setIndicator(getString(R.string.tab2));
+		tabHost.addTab(spec);
+
+		tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.btn_selector);
+		tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.btn_selector);
         
         toolBar = (Toolbar) findViewById(R.id.toolbar); //Use toolbar
         setSupportActionBar(toolBar);  
-        getSupportActionBar().setTitle(R.string.cur_tasks);
+        //getSupportActionBar().setTitle(R.string.app_name);
+		getSupportActionBar().setTitle("");
+		getSupportActionBar().setIcon(R.drawable.ic_launcher);
         
 
         
         mRecyclerView = (RealmRecyclerView) findViewById(R.id.recycler_view);
-        
+
+
 
         mPrefsHelper = new PrefsHelper(this);
 
 
 		//resetRealm();
-		RealmConfiguration conf = getRealmConfig();
-		realm = Realm.getInstance(conf);
-		RealmResults<Task> results = realm.where(Task.class).findAll();
+
+		RealmResults<Task> results = ((MApp)getApplicationContext()).realm.where(Task.class).findAll();
 
 		mRecycleAdapter = new TaskRecycleAdapter(this,results);
 
 
 		mRecyclerView.setAdapter(mRecycleAdapter);
+		mRecyclerView.disableShowLoadMore();
 
 
 		AlarmWork.setAllAlarms(this,results);
 
 
-                
 
-        ViewCompat.setNestedScrollingEnabled(mRecyclerView,true);
+
+
+		//ViewCompat.setNestedScrollingEnabled(mRecyclerView,true);
         
         
         
@@ -220,7 +252,7 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 		
 		//Add new task button
 		FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
-		fabAdd.setBackgroundColor(getResources().getColor(R.color.orange));
+		//fabAdd.setBackgroundColor(getResources().getColor(R.color.orange));
 		fabAdd.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -233,8 +265,21 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 		
 
 
+		//Expandable list view
+		mExpListView = (ExpandableListView) findViewById(R.id.lvExpListView);
+
+		mStatisticListAdapter = new StatisticListAdapter(this);
+
+		mExpListView.setAdapter(mStatisticListAdapter);
+
     }
 
+	@Override
+	protected void onDestroy() {
+
+		if (mRecycleAdapter!=null) mRecycleAdapter.freeResources();
+		super.onDestroy();
+	}
 
 
 	//Change item start/end date/time
@@ -259,6 +304,7 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 		mIntent.putExtra(Task.KEY_ID,0);
 		mIntent.putExtra(Task.KEY_STARTTIME,-1L);
 		mIntent.putExtra(Task.KEY_ENDTIME,-1L);
+		mIntent.putExtra(Task.KEY_AUTOFINISH,mPrefsHelper.getDefaultAutoFinishTime());
 		startActivityForResult(mIntent, RESULT_CREATE_ACTIVITY);
     }
     
@@ -281,12 +327,16 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 				long mStartTime  = data.getLongExtra(Task.KEY_STARTTIME, -1);
 				long mEndTime  = data.getLongExtra(Task.KEY_ENDTIME, -1);
 
+				long mPeriodicHours  = data.getLongExtra(Task.KEY_PERIODICHOURS, -1);
+				String mAvatarPath = data.getStringExtra(Task.KEY_AVATARPATH);
+				boolean mIsPeriodic = data.getBooleanExtra(Task.KEY_ISPERIODIC,false);
+				boolean mIsPaused = data.getBooleanExtra(Task.KEY_ISPAUSED,false);
                 
                 if (mID ==0 )
 				{
 					mID = mPrefsHelper.getUniqueID();
 
-					Realm instance = Realm.getInstance(getRealmConfig());
+					Realm instance = ((MApp)getApplicationContext()).realm;
 					instance.beginTransaction();
 
 					Task mTask = instance.createObject(Task.class);
@@ -297,8 +347,13 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 					mTask.setStartTime(mStartTime);
 					mTask.setEndTime(mEndTime);
 
+					mTask.setPeriodicHours(mPeriodicHours);
+					mTask.setAvatarPath(mAvatarPath);
+					mTask.setIsPaused(mIsPaused);
+					mTask.setIsPeriodic(mIsPeriodic);
+
 					instance.commitTransaction();
-					instance.close();
+					//instance.close();
 
 
 
@@ -311,13 +366,13 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
                 else
 				{
 
-					Realm instance = Realm.getInstance(getRealmConfig());
+					Realm instance = ((MApp)getApplicationContext()).realm;
 					Task mTask = instance.where(Task.class).equalTo("id", mID).findFirst();
 
 					if (mTask == null)
 					{
 						Log.e(MainActivity.TAG,"Can't find task with id="+Long.toString(mID));
-						instance.close();
+						//instance.close();
 						return;
 					}
 
@@ -331,8 +386,15 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 					mTask.setStartTime(mStartTime);
 					mTask.setEndTime(mEndTime);
 
+					mTask.setPeriodicHours(mPeriodicHours);
+					mTask.setAvatarPath(mAvatarPath);
+					mTask.setIsPaused(mIsPaused);
+					mTask.setIsPeriodic(mIsPeriodic);
+
 					instance.commitTransaction();
-					instance.close();
+					//instance.close();
+
+
 
 					//mRecycleAdapter.realmResults.set(mPosition, task);
 					mRecycleAdapter.notifyDataSetChanged();
@@ -347,9 +409,9 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
             
 
             //Button exit was pressed, no result
-            if (resultCode == Activity.RESULT_CANCELED) {
+            //if (resultCode == Activity.RESULT_CANCELED) {
            
-            }
+          //  }
         }
         
         
@@ -421,6 +483,25 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
+
+
+		if (id == R.id.action_update_stats) {
+
+			if (mStatisticListAdapter == null) return true;
+			if (mStatisticListAdapter.isUpdating()) return true;
+
+			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			ImageView iv = (ImageView) inflater.inflate(R.layout.rotate_btn, null);
+
+			Animation rotation = AnimationUtils.loadAnimation(this, R.anim.roation);
+			rotation.setRepeatCount(Animation.INFINITE);
+			iv.startAnimation(rotation);
+
+			item.setActionView(iv);
+
+			mStatisticListAdapter.updateResults(item);
+
+		}
       
         
         if (id == android.R.id.home) {
@@ -511,7 +592,7 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 
 		long mID = mPrefsHelper.getUniqueID();
 
-		Realm instance = Realm.getInstance(getRealmConfig());
+		Realm instance = ((MApp)getApplicationContext()).realm;
 		instance.beginTransaction();
 
 		Task mTask = instance.createObject(Task.class);
@@ -523,7 +604,7 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 		mTask.setEndTime(-1);
 
 		instance.commitTransaction();
-		instance.close();
+	//	instance.close();
 	}
 
 
@@ -534,38 +615,24 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
     void addTasksToListView() //Fill list, with item count three time much more, than items visible
     {
 
-		if (mRecycleAdapter.realmResults.size()==0)//if we have no task, add first
-			addRandomTask();
-
-		final int UNBOUNDED = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-		View childView = mRecyclerView.getChildAt(0);
-
-		if (childView == null) return;
-
-		try {
-			childView.measure(UNBOUNDED, UNBOUNDED);
-		}catch(Exception e) {
-			return;
-		}
-
-		int mElementHeight = childView.getMeasuredHeight();
-
-		if (mElementHeight==0) return;
-
+		int curSize = mRecycleAdapter.realmResults.size();
 
 		android.support.design.widget.CoordinatorLayout mainLayout = (android.support.design.widget.CoordinatorLayout) findViewById(
 				R.id.mainLayout);
 
-
 		int listViewHeight = mainLayout.getHeight() - toolBar.getHeight();
 
-		int mElementsNeedCount = (listViewHeight/mElementHeight)*3;
 
+		int elementHeight = (int) getResources().getDimension(R.dimen.swipe_height);
 
-		while(mRecycleAdapter.realmResults.size()<mElementsNeedCount) addRandomTask();
+		int mElementsNeedCount = (listViewHeight/elementHeight)*3 - curSize;
 
+		for (int i=0; i <mElementsNeedCount; i++) addRandomTask();
+
+		mRecycleAdapter.notifyDataSetChanged();
 
     	
+
 
 
     }
@@ -599,13 +666,13 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 	@Override
 	public void UpdateTime(long mID, long timeStart, long timeEnd) {
 
-		Realm instance = Realm.getInstance(getRealmConfig());
+		Realm instance = ((MApp)getApplicationContext()).realm;
 		Task mTask = instance.where(Task.class).equalTo("id", mID).findFirst();
 
 		if (mTask == null)
 		{
 			Log.e(MainActivity.TAG,"Can't find task with id="+Long.toString(mID));
-			instance.close();
+			//instance.close();
 			return;
 		}
 
@@ -616,7 +683,7 @@ public class MainActivity extends AppCompatActivity   implements FragmentOkCance
 		mTask.setEndTime(timeEnd);
 
 		instance.commitTransaction();
-		instance.close();
+		//instance.close();
 
 
 		mRecycleAdapter.notifyDataSetChanged();

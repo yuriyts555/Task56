@@ -6,6 +6,7 @@
 
     <dimen name="swipe_height">40dp</dimen>
     <dimen name="space_height">20dp</dimen>
+    <dimen name="space">20dp</dimen>
     
    <dimen name="color_hsvHeight">240dp</dimen>
 	<dimen name="color_hsvWidth">240dp</dimen>
